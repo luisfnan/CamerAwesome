@@ -33,6 +33,8 @@ class SensorConfig {
 
   late BehaviorSubject<double> _zoomController;
 
+  final bool lockAspectRatio;
+
   /// Use this stream to debounce brightness events
   final BehaviorSubject<double> _brightnessController =
       BehaviorSubject<double>();
@@ -42,12 +44,14 @@ class SensorConfig {
     Sensor? sensor,
     FlashMode flashMode = FlashMode.none,
     double zoom = 0.0,
+    bool lockAspectRatio = false,
     CameraAspectRatios aspectRatio = CameraAspectRatios.ratio_4_3,
   }) : this._(
           sensors: [sensor ?? Sensor.position(SensorPosition.back)],
           flash: flashMode,
           currentZoom: zoom,
           aspectRatio: aspectRatio,
+          lockAspectRatio: lockAspectRatio,
         );
 
   SensorConfig.multiple({
@@ -55,15 +59,18 @@ class SensorConfig {
     FlashMode flashMode = FlashMode.none,
     double zoom = 0.0,
     CameraAspectRatios aspectRatio = CameraAspectRatios.ratio_4_3,
+    bool lockAspectRatio = false,
   }) : this._(
           sensors: sensors,
           flash: flashMode,
           currentZoom: zoom,
           aspectRatio: aspectRatio,
+          lockAspectRatio: lockAspectRatio,
         );
 
   SensorConfig._({
     required this.sensors,
+    required this.lockAspectRatio,
     FlashMode flash = FlashMode.none,
     CameraAspectRatios aspectRatio = CameraAspectRatios.ratio_4_3,
 
@@ -139,6 +146,7 @@ class SensorConfig {
   /// [CameraAspectRatios.ratio_4_3]
   /// [CameraAspectRatios.ratio_1_1]
   Future<void> switchCameraRatio() async {
+    if (lockAspectRatio) return;
     if (aspectRatio == CameraAspectRatios.ratio_16_9) {
       setAspectRatio(CameraAspectRatios.ratio_4_3);
     } else if (aspectRatio == CameraAspectRatios.ratio_4_3) {
