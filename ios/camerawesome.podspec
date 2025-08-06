@@ -15,8 +15,8 @@ An open source camera plugin by the community for the community
   s.source           = { :path => '.' }
   s.source_files = 'camerawesome/Sources/camerawesome/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '8.0'
-  s.ios.deployment_target = '12.0'
+  s.platform = :ios, '15.5'
+  s.ios.deployment_target = '15.5'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
